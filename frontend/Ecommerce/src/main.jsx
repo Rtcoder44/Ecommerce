@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
-import { CartProvider } from './cartContext.jsx';
+import { CartProvider } from './components/cartContext.jsx';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
