@@ -51,6 +51,10 @@ const Navbar = () => {
       <ListItem button component={Link} to="/" onClick={toggleDrawer(false)}>
         <ListItemText primary="Home" />
       </ListItem>
+      <ListItem button component={Link} to="/cart" onClick={toggleDrawer(false)}>
+        {/* <ShoppingCartIcon sx={{ mr: 2 }} /> */}
+        <ListItemText primary="Cart" />
+      </ListItem>
       {isAuthenticated ? (
         <>
           <ListItem button component={Link} to="/myorder" onClick={toggleDrawer(false)}>
@@ -70,6 +74,7 @@ const Navbar = () => {
           </ListItem>
         </>
       )}
+      
     </List>
   );
 

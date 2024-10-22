@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import {
     Container,
     Typography,
@@ -15,6 +14,7 @@ export default function AddProduct() {
     const [product, setProduct] = useState({
         productName: '',
         productDiscription: '',
+        price: '',         
         imageUrl: '',
     });
 
@@ -32,19 +32,23 @@ export default function AddProduct() {
         e.preventDefault();
 
         try {
+            const token = localStorage.getItem('token');  
+
             const response = await fetch('http://localhost:8080/data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,  
                 },
                 body: JSON.stringify(product),
             });
 
             if (response.ok) {
                 setMessage('Product added successfully!');
-                setProduct({ productName: '', productDiscription: '', imageUrl: '' });
+                setProduct({ productName: '', productDiscription: '', price: '', imageUrl: '' });
             } else {
-                setMessage('Failed to add product.');
+                const errorData = await response.json();
+                setMessage(`Failed to add product: ${errorData.message}`);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -54,7 +58,6 @@ export default function AddProduct() {
 
     return (
         <Container maxWidth="sm" sx={{ mt: 5 }}>
-          
             <Paper elevation={3} sx={{ p: 4 }}>
                 <Typography variant="h4" gutterBottom>
                     Add a New Product
@@ -93,6 +96,7 @@ export default function AddProduct() {
                             onChange={handleChange}
                         />
                     </Box>
+
                     <Box mb={2}>
                         <TextField
                             fullWidth

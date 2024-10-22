@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";  // Keep this import only once
 import { useCart } from "../components/cartContext";
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -8,7 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Homepage() {
     const [products, setProducts] = useState([]);
@@ -16,7 +16,8 @@ export default function Homepage() {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
-    const fetchProduct = async () => {
+    // Fetch products using fetch API
+    const fetchProducts = async () => {
         try {
             const response = await fetch('http://localhost:8080/');
             if (response.ok) {
@@ -26,34 +27,35 @@ export default function Homepage() {
                 setMessage("Failed to fetch the data");
             }
         } catch (error) {
+            console.error("Error fetching data:", error);
             setMessage("Error fetching data");
         }
     };
 
+    // useEffect to fetch products when the component mounts
     useEffect(() => {
-        fetchProduct();
+        fetchProducts();
     }, []);
 
-  
+    // Check if user is logged in
     const isLoggedIn = () => {
         return !!localStorage.getItem('token');
     };
 
+    // Add product to cart
     const addToCart = (product) => {
         if (isLoggedIn()) {
             dispatch({ type: "ADD_TO_CART", payload: product });
             setMessage(`Added ${product.productName} to cart`);
         } else {
             setMessage("You must be logged in to add products to the cart.");
-            navigate('/login'); 
+            navigate('/login');
         }
     };
 
     return (
         <div className="App" style={{ backgroundColor: '#f4f6f9', minHeight: '100vh', padding: '20px' }}>
-            
             {message && <Typography variant="body1" color="success.main" sx={{ padding: 2, textAlign: 'center' }}>{message}</Typography>}
-            
             <Box sx={{ p: 4 }}>
                 {products.length === 0 ? (
                     <Typography variant="body1" sx={{ textAlign: 'center', color: '#555' }}>No products available.</Typography>
@@ -110,6 +112,23 @@ export default function Homepage() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions sx={{ justifyContent: 'center', paddingBottom: '16px' }}>
+                                    <Link to={`/product/${product._id}`}>
+                                        <Button
+                                            size="small"
+                                            sx={{
+                                                backgroundColor: "#FFB300", 
+                                                color: "#fff",
+                                                transition: 'background-color 0.3s ease',
+                                                '&:hover': {
+                                                    backgroundColor: '#FFA000',
+                                                },
+                                                padding: '8px 16px',
+                                                borderRadius: '20px',
+                                            }}
+                                        >
+                                            View Details
+                                        </Button>
+                                    </Link>
                                     <Button 
                                         size="small" 
                                         onClick={() => addToCart(product)} 
@@ -121,7 +140,8 @@ export default function Homepage() {
                                                 backgroundColor: '#FFA000',
                                             },
                                             padding: '8px 16px',
-                                            borderRadius: '20px'
+                                            borderRadius: '20px',
+                                            ml: 1,
                                         }}
                                     >
                                         Add to Cart
