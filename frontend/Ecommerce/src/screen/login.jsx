@@ -21,7 +21,9 @@ const Login = () => {
         const response = await fetch("http://localhost:8080/login", {
             method: "POST",
             headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
                 'Content-Type': 'application/json',
+                
             },
             body: JSON.stringify(formData),
         });
