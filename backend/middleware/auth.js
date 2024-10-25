@@ -3,7 +3,6 @@ const User = require("../model/user");
 
 const auth = async (req, res, next) => {
     try {
-     
         const authHeader = req.headers.authorization;
         if (!authHeader) {
             console.log("No authorization header provided.");
@@ -16,11 +15,8 @@ const auth = async (req, res, next) => {
             return res.status(401).json({ error: "Unauthorized access: No token provided" });
         }
 
-        
         const decoded = jwt.verify(token, process.env.SECRET_JWT);
-        
 
-      
         const user = await User.findById(decoded.id);
         if (!user) {
             console.log(`User with ID ${decoded.id} not found.`);
@@ -28,8 +24,6 @@ const auth = async (req, res, next) => {
         }
 
         req.user = user;
-
-      
         next();
     } catch (error) {
         if (error.name === "JsonWebTokenError") {

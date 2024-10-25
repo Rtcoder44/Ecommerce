@@ -8,10 +8,12 @@ import SignUp from './screen/signup';
 import Login from './screen/login';
 import MyOrders from './screen/myOrder';
 import ProductDetails from './screen/productDetails';
+import { CartProvider } from './components/cartContext';
 
 function App() {
   return (
     <>
+    <CartProvider>
       <Router>
         <Navbar />
         <Routes>
@@ -24,6 +26,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </Router>
+      </CartProvider>
     </>
   );
 }

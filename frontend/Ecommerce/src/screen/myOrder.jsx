@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { Box, Typography, List, ListItem, ListItemText, Divider, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function MyOrders() {
     const [orders, setOrders] = useState([]);
@@ -15,7 +16,7 @@ export default function MyOrders() {
             }
 
             try {
-                const response = await fetch('http://localhost:8080/myorder', {
+                const response = await fetch('http://localhost:8080/orders/product', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -40,7 +41,7 @@ export default function MyOrders() {
                 console.error("Error while fetching orders:", err);
                 setError(err.message || "An unknown error occurred.");
             } finally {
-                setLoading(false);  // Stop loading once data is fetched or error occurs
+                setLoading(false);  
             }
         };
 
@@ -48,27 +49,33 @@ export default function MyOrders() {
     }, []);
 
     return (
-        <Box sx={{ padding: 3 }}>
-            <Typography variant="h4" gutterBottom>My Orders</Typography>
+        <Box sx={{ padding: 3, maxWidth: 800, margin: 'auto' }}>
+            <Typography variant="h4" gutterBottom align="center" color="primary">My Orders</Typography>
 
             {loading ? (
-                <Typography variant="body1">Loading orders...</Typography>
+                <Typography variant="body1" align="center">Loading orders...</Typography>
             ) : error ? (
-                <Typography variant="body1" color="error">{error}</Typography>
+                <Typography variant="body1" align="center" color="error">{error}</Typography>
             ) : orders.length === 0 ? (
-                <Typography variant="body1">You have no orders yet.</Typography>
+                <Typography variant="body1" align="center">You have no orders yet.</Typography>
             ) : (
                 <List>
                     {orders.map((order) => (
-                        <ListItem key={order._id} sx={{ borderBottom: "1px solid #ccc", mb: 2 }}>
+                        <ListItem key={order._id} sx={{ borderBottom: "1px solid #ccc", mb: 2, bgcolor: '#f9f9f9', borderRadius: 1 }}>
                             <ListItemText
-                                primary={`Order Date: ${new Date(order.date).toLocaleDateString()}`}
+                                primary={<Typography variant="h6">Order Date: {new Date(order.date).toLocaleDateString()}</Typography>}
                                 secondary={order.items.map((item, index) => (
-                                    <Typography key={index} variant="body1">
-                                        {item.productName} - ₹{item.price} x {item.quantity}
-                                    </Typography>
+                                    <Box key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <Link to={`/product/${item._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                            <Button variant="text" color="primary">{item.productName}</Button>
+                                        </Link>
+                                        <Typography variant="body1">
+                                            ₹{item.price} x {item.quantity}
+                                        </Typography>
+                                    </Box>
                                 ))}
                             />
+                            <Divider />
                         </ListItem>
                     ))}
                 </List>

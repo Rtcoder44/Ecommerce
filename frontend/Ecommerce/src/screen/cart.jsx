@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Typography, List, ListItem, ListItemText, Box, Card, CardMedia, CardContent } from '@mui/material';
+import { Link } from 'react-router-dom'; 
 import { useCart } from '../components/cartContext';
 
 export default function Cart() {
@@ -19,7 +20,7 @@ export default function Cart() {
     };
 
     const handleClearCart = () => {
-        clearCart(); 
+        clearCart();
     };
 
     const handleCheckOut = async () => {
@@ -40,7 +41,7 @@ export default function Cart() {
             });
 
             if (response.ok) {
-                await handleClearCart(); 
+                await handleClearCart();
                 alert("Checkout successful! Your order has been placed.");
             } else {
                 const errorData = await response.json();
@@ -65,12 +66,16 @@ export default function Cart() {
                                 <CardMedia
                                     component="img"
                                     sx={{ width: 100, height: 100 }}
-                                    image={item.imageUrl} // Assuming the image URL is stored in the cart items
+                                    image={item.imageUrl} 
                                     alt={item.productName}
                                 />
                                 <CardContent sx={{ flex: 1 }}>
                                     <ListItemText
-                                        primary={item.productName}
+                                        primary={
+                                            <Link to={`/product/${item._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                                {item.productName}
+                                            </Link>
+                                        }
                                         secondary={
                                             <>
                                                 <Typography variant="body1">{item.productDescription}</Typography>

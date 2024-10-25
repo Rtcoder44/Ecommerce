@@ -5,18 +5,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Box, Button } from '@mui/material';
-import { useCart } from '../components/cartContext'; // Import your cart context
+import { useCart } from '../components/cartContext'; 
 
 export default function ProductDetails() {
-    const { id } = useParams(); // Get the product ID from the URL
+    const { id } = useParams(); 
     const [product, setProduct] = useState(null);
-    const { dispatch } = useCart(); // Use cart context
+    const { dispatch } = useCart(); 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/${id}`); // Fetch product by ID
+                const response = await fetch(`http://localhost:8080/${id}`); 
                 if (response.ok) {
                     const data = await response.json();
                     setProduct(data);
@@ -38,7 +38,7 @@ export default function ProductDetails() {
         if (isLoggedIn()) {
             dispatch({ type: "ADD_TO_CART", payload: product });
         } else {
-            navigate('/login'); // Redirect to login if not logged in
+            navigate('/login');
         }
     };
 

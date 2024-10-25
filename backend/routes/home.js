@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const data = require("../model/data"); // Ensure this is your Product model
+const data = require("../model/data"); 
 const auth = require("../middleware/auth");
 
-// Route to fetch all products
+
 router.get("/", async (req, res) => {
     try {
         const products = await data.find();
@@ -39,7 +39,7 @@ router.post("/", auth, async (req, res) => {
 
         const saveProduct = await newProduct.save();
         res.status(201).json({ message: "Product added successfully", product: saveProduct });
-        console.log(saveProduct);
+        
     } catch (error) {
         res.status(500).json({ error: "Failed to add product" });
     }

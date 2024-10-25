@@ -22,11 +22,11 @@ router.post("/", auth, async (req, res) => {
     }
 });
 
-router.get("/", auth, async (req, res) => {
+router.get("/product", auth, async (req, res) => {
     const userId = req.user.id;
 
     try {
-        console.log(`Fetching orders for user: ${userId}`);  // Debugging
+       
 
         const orders = await Order.find({ userId });
         
@@ -37,7 +37,7 @@ router.get("/", auth, async (req, res) => {
 
         res.status(200).json(orders);
     } catch (error) {
-        console.error("Error fetching orders:", error);  // Improved error logging
+        console.error("Error fetching orders:", error);  
         res.status(500).json({ error: "Failed to fetch orders" });
     }
 });

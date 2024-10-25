@@ -73,7 +73,7 @@ export const CartProvider = ({ children }) => {
             if (!token) return;
 
             try {
-                const response = await fetch('http://localhost:8080/cart', {
+                const response = await fetch('http://localhost:8080/cart/cart', {
                     headers: {
                         method: "GET",
                         'Authorization': `Bearer ${token}`,
@@ -86,7 +86,7 @@ export const CartProvider = ({ children }) => {
                 }
 
                 const data = await response.json();
-                console.log("Fetched cart items:", data);
+              
                 dispatch({ type: "SET_CART", payload: data.items || [] });
             } catch (error) {
                 console.error("Error fetching cart items:", error);
@@ -102,7 +102,7 @@ export const CartProvider = ({ children }) => {
             if (!token) return;
 
             try {
-                await fetch('http://localhost:8080/cart', {
+                await fetch('http://localhost:8080/cart/update', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export const CartProvider = ({ children }) => {
         if (!token) return;
 
         try {
-            await fetch('http://localhost:8080/cart', {
+            await fetch('http://localhost:8080/cart/remove', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,

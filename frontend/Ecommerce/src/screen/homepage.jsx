@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";  // Keep this import only once
+import { useEffect, useState } from "react";  
 import { useCart } from "../components/cartContext";
 import * as React from 'react';
 import Card from '@mui/material/Card';
@@ -16,7 +16,7 @@ export default function Homepage() {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
-    // Fetch products using fetch API
+
     const fetchProducts = async () => {
         try {
             const response = await fetch('http://localhost:8080/');
@@ -32,17 +32,16 @@ export default function Homepage() {
         }
     };
 
-    // useEffect to fetch products when the component mounts
     useEffect(() => {
         fetchProducts();
     }, []);
 
-    // Check if user is logged in
+  
     const isLoggedIn = () => {
         return !!localStorage.getItem('token');
     };
 
-    // Add product to cart
+
     const addToCart = (product) => {
         if (isLoggedIn()) {
             dispatch({ type: "ADD_TO_CART", payload: product });

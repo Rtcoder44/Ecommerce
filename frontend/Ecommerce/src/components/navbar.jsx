@@ -10,20 +10,24 @@ import {
   ListItem,
   ListItemText,
   useMediaQuery,
+  Badge,
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HomeIcon from '@mui/icons-material/Home';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useTheme } from '@mui/material/styles'; 
+import { useTheme } from '@mui/material/styles';
+import { useCart } from '../components/cartContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const theme = useTheme(); 
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
+  const { state } = useCart(); // Access cart state
+  const itemCount = state.cart.reduce((total, item) => total + item.quantity, 0); 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +56,6 @@ const Navbar = () => {
         <ListItemText primary="Home" />
       </ListItem>
       <ListItem button component={Link} to="/cart" onClick={toggleDrawer(false)}>
-        {/* <ShoppingCartIcon sx={{ mr: 2 }} /> */}
         <ListItemText primary="Cart" />
       </ListItem>
       {isAuthenticated ? (
@@ -74,7 +77,6 @@ const Navbar = () => {
           </ListItem>
         </>
       )}
-      
     </List>
   );
 
@@ -112,7 +114,9 @@ const Navbar = () => {
                 Add Product
               </Button>
               <IconButton component={Link} to="/cart" color="inherit" sx={{ mx: 1 }}>
-                <ShoppingCartIcon />
+                <Badge badgeContent={itemCount} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
               </IconButton>
             </div>
             <div style={{ display: 'flex' }}>
