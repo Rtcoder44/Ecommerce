@@ -4,7 +4,7 @@ const { connectToDb } = require("./connection");
 require("dotenv").config();
 const auth = require("./middleware/auth");
 const app = express();
-const port =process.env.PORT ||  8080;
+const port = 8080;
 
 
 const homeRoute = require("./routes/home");
