@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, List, ListItem, ListItemText, Divider, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function MyOrders() {
     const [orders, setOrders] = useState([]);
@@ -16,7 +17,7 @@ export default function MyOrders() {
             }
 
             try {
-                const response = await fetch('http://localhost:8080/orders/product', {
+                const response = await fetch(`${API_BASE_URL}/orders/product`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },

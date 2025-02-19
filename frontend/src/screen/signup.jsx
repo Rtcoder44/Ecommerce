@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Container, Typography, Box } from '@mui/material';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 const SignUp = ()=>{
@@ -18,7 +19,7 @@ const SignUp = ()=>{
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:8080/signup",{
+        const response = await fetch(`${API_BASE_URL}/signup`,{
             method:"POST",
             headers: {
                 'Content-Type': 'application/json',

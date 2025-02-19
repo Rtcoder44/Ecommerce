@@ -1,4 +1,6 @@
 import React, { createContext, useReducer, useContext, useEffect } from 'react';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const initialState = {
     cart: [],
@@ -73,7 +75,7 @@ export const CartProvider = ({ children }) => {
             if (!token) return;
 
             try {
-                const response = await fetch('http://localhost:8080/cart/cart', {
+                const response = await fetch(`${API_BASE_URL}/cart/cart`, {
                     headers: {
                         method: "GET",
                         'Authorization': `Bearer ${token}`,
@@ -102,7 +104,7 @@ export const CartProvider = ({ children }) => {
             if (!token) return;
 
             try {
-                await fetch('http://localhost:8080/cart/update', {
+                await fetch(`${API_BASE_URL}/cart/update`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -125,7 +127,7 @@ export const CartProvider = ({ children }) => {
         if (!token) return;
 
         try {
-            await fetch('http://localhost:8080/cart/remove', {
+            await fetch(`${API_BASE_URL}/cart/remove`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -146,7 +148,7 @@ export const CartProvider = ({ children }) => {
         if (!token) return;
 
         try {
-            await fetch(`http://localhost:8080/cart/item/${state.cart[index]._id}`, {
+            await fetch(`${API_BASE_URL}/cart/item/${state.cart[index]._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,

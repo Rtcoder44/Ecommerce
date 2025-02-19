@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:8080/login", {
+        const response = await fetch(`${API_BASE_URL}/login`, {
             method: "POST",
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("token")}`,

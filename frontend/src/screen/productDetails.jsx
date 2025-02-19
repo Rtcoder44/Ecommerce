@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Box, Button } from '@mui/material';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import { useCart } from '../components/cartContext'; 
 
 export default function ProductDetails() {
@@ -16,7 +17,7 @@ export default function ProductDetails() {
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/${id}`); 
+                const response = await fetch(`${API_BASE_URL}/${id}`); 
                 if (response.ok) {
                     const data = await response.json();
                     setProduct(data);

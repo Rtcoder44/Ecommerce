@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "../components/cartContext";
 import * as React from 'react';
 import Card from '@mui/material/Card';
+
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -9,6 +10,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 export default function Homepage() {
     const [products, setProducts] = useState([]);
@@ -19,7 +22,7 @@ export default function Homepage() {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://localhost:8080/');
+            const response = await fetch(`${API_BASE_URL}/`);
             if (response.ok) {
                 const data = await response.json();
                 setProducts(data);

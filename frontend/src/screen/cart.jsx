@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Typography, List, ListItem, ListItemText, Box, Card, CardMedia, CardContent } from '@mui/material';
 import { Link } from 'react-router-dom'; 
 import { useCart } from '../components/cartContext';
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export default function Cart() {
     const { state, dispatch, clearCart, removeFromCart } = useCart();
     const { cart } = state;
@@ -31,7 +31,7 @@ export default function Cart() {
                 return;
             }
 
-            const response = await fetch('http://localhost:8080/orders', {
+            const response = await fetch(`${API_BASE_URL}/orders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

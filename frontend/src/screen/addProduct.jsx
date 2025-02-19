@@ -9,6 +9,7 @@ import {
     TextareaAutosize,
     Paper
 } from '@mui/material';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function AddProduct() {
     const [product, setProduct] = useState({
@@ -34,7 +35,7 @@ export default function AddProduct() {
         try {
             const token = localStorage.getItem('token');  
 
-            const response = await fetch('http://localhost:8080/data', {
+            const response = await fetch(`${API_BASE_URL}/data`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
