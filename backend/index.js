@@ -16,11 +16,12 @@ const cartRoutes = require("./routes/cart");
 
 app.use(express.json());
 app.use(
-    cors({
-      origin: "https://rtcoder44.github.io/Ecommerce/",
-      credentials: true,
-    })
-  );
+  cors({
+    origin: ["https://rtcoder44.github.io", "https://ecommerce-p5mr.onrender.com"],
+    credentials: true,
+  })
+);
+
 
 
 connectToDb(process.env.MONGO_URI).catch((error) => {
